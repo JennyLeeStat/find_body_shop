@@ -3,7 +3,6 @@ import urllib.request
 from bs4 import BeautifulSoup
 import json
 from collections import defaultdict, Counter
-from pprint import pprint
 import pandas as pd
 
 
@@ -18,6 +17,7 @@ url = "{}/search?find_desc={}&find_loc={}{}".format(
 )
 
 MAX_PAGE = 10
+SLEEP = 10
 
 def get_hrefs(url, max_page=MAX_PAGE):
     hrefs = [ ]
@@ -36,7 +36,7 @@ def get_hrefs(url, max_page=MAX_PAGE):
             else:
                 hrefs.append(link.get('href'))
 
-        time.sleep(5)
+        time.sleep(SLEEP)
     return hrefs
 
 hrefs = get_hrefs(url)
@@ -122,7 +122,7 @@ for i, link in enumerate(hrefs):
     yp = ParseYelpBizPage(link)
     name = yp.get_name()
     result_dict[name] = yp.get_ratings_table()
-    time.sleep(5)
+    time.sleep(SLEEP)
 
 
 
